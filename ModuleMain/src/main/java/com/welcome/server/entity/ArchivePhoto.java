@@ -22,6 +22,11 @@ public class ArchivePhoto {
 
     public ArchivePhoto(){}
 
+    public ArchivePhoto(String photoRef, User user) {
+        this.photoRef = photoRef;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

@@ -24,6 +24,9 @@ public class User {
     @Column(name = "photo_ref")
     private String photoRef;
 
+    @Column(name = "imei",nullable = false)
+    private String imei;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "raiting_id",referencedColumnName = "id")
     private Raiting raiting;
@@ -63,6 +66,14 @@ public class User {
 
     public void setPhotoRef(String photoRef) {
         this.photoRef = photoRef;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public Raiting getRaiting() {

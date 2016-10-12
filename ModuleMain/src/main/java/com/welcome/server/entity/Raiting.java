@@ -17,19 +17,27 @@ public class Raiting {
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
-    @Column(name = "like_count")
+    @Column(name = "like_count",nullable = false)
     private Long likeCount;
 
-    @Column(name = "willcome_count")
+    @Column(name = "willcome_count",nullable = false)
     private Long willcomeCount;
 
-    @Column(name = "post_count")
+    @Column(name = "post_count",nullable = false)
     private Integer postCount;
 
-    @Column(name = "vippost_count")
+    @Column(name = "vippost_count",nullable = false)
     private Integer vippostCount;
 
     public Raiting(){}
+
+    public Raiting(User user, Long likeCount, Long willcomeCount, Integer postCount, Integer vippostCount) {
+        this.user = user;
+        this.likeCount = likeCount;
+        this.willcomeCount = willcomeCount;
+        this.postCount = postCount;
+        this.vippostCount = vippostCount;
+    }
 
     public long getId() {
         return id;
