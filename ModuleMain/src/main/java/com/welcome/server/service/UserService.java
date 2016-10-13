@@ -7,6 +7,7 @@ import com.welcome.server.entity.User;
  */
 public interface UserService {
 
-    String regNewUser(User user);
+    User regNewUser(User user);
     String authUser(User user);
+    User updateUser(User user);
 }

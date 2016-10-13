@@ -17,16 +17,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private RaitingService raitingService;
-
     @Override
     @Transactional
-    public String regNewUser(User user) throws IllegalArgumentException{
+    public User regNewUser(User user) throws IllegalArgumentException{
         if (!user.getNickname().isEmpty() && !checkUserName(user.getNickname())) {
-            repository.save(user);
-            raitingService.regNewUser(user);
-            return authUser(user);
+            return repository.save(user);
         }
         throw new IllegalArgumentException("Nickname is empty or already exists");
     }
@@ -40,6 +35,21 @@ public class UserServiceImpl implements UserService {
             return FirebaseAuth.getInstance().createCustomToken(uid);
         }
         throw new IllegalArgumentException("Imei or id are invalid");
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(User user) {
+        if (!user.getNickname().isEmpty() && user.getId()!=null){
+            User updatableUser=repository.findOne(user.getId());
+            if (updatableUser!=null) {
+                updatableUser.setEmail(user.getEmail());
+                updatableUser.setNickname(user.getNickname());
+                updatableUser.setPhotoRef(user.getPhotoRef());
+                repository.saveAndFlush(updatableUser);
+                return updatableUser;
+            }else throw new IllegalArgumentException("This user doesn't exists");
+        }else throw new IllegalArgumentException("nickname or id is empty");
     }
 
     private boolean checkCredentials(String imei, Long id) {

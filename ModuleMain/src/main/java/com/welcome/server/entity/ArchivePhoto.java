@@ -1,5 +1,7 @@
 package com.welcome.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 /**
@@ -17,7 +19,8 @@ public class ArchivePhoto {
     private String photoRef;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
+    @JsonManagedReference
     private User user;
 
     public ArchivePhoto(){}

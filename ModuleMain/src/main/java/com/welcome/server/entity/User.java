@@ -1,6 +1,10 @@
 package com.welcome.server.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,13 +13,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "nickname",length = 20, nullable = false)
+    @Column(name = "nickname",length = 20, nullable = false, unique = true)
     private String nickname;
 
     @Column(name = "email")
@@ -27,16 +32,17 @@ public class User {
     @Column(name = "imei",nullable = false)
     private String imei;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "raiting_id",referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "raiting_id",referencedColumnName = "id",updatable = false)
     private Raiting raiting;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "id")
+    @JsonBackReference
     private List<ArchivePhoto> archivePhotos;
 
     public User(){}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
