@@ -14,7 +14,6 @@ public class Raiting {
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",referencedColumnName = "id",unique = true)
     private User user;
 
     @Column(name = "like_count",nullable = false)

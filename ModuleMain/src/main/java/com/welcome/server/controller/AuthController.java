@@ -3,6 +3,7 @@ package com.welcome.server.controller;
 import com.welcome.server.entity.Raiting;
 import com.welcome.server.entity.User;
 import com.welcome.server.service.UserService;
+import org.apache.http.impl.entity.StrictContentLengthStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,49 +17,20 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/reg/{user}", method = RequestMethod.POST)
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
     @ResponseBody
-    public User registration(@PathVariable User user) {
+    public User registration(@RequestBody User user) {
         return userService.regNewUser(user);
     }
 
-    @RequestMapping(value = "/auth/{user}")
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
     @ResponseBody
-    public String auth(@PathVariable User user) {
-        return userService.authUser(user);
+    public String auth(@RequestBody String imei) {
+        return userService.authUser(imei);
     }
 
-    @RequestMapping(value = "/testReg", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public User testReg() {
-        User user = new User();
-        user.setNickname("SuperVasya");
-        user.setEmail("vasya@gmail.com");
-        user.setImei("SuperNokiaPhone");
-        user.setRaiting(new Raiting(user, 0L, 0L, 0, 0));
-        return userService.regNewUser(user);
-    }
-
-    @RequestMapping(value = "/testAuth", method = RequestMethod.GET)
-    @ResponseBody
-    public String testAuth() {
-        User user = new User();
-        user.setId(1);
-        user.setNickname("SuperVasya");
-        user.setImei("SuperNokiaPhone");
-        return userService.authUser(user);
-    }
-
-    @RequestMapping(value = "/testUpdate", method = RequestMethod.GET)
-    @ResponseBody
-    public User testUpdate() {
-        User user = new User();
-        user.setId(1);
-        user.setImei("SuperNokiaPhone");
-        user.setNickname("Petuna");
-        user.setEmail("MAIL");
-        user.setPhotoRef("asdasd");
-        return userService.updateUser(user);
-    }
+    public void delete(@RequestBody User user){userService.deleteUser(user);}
 
 }

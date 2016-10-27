@@ -2,10 +2,9 @@
 .gitignore
 .idea
 ModuleMain.iml
-db.properties
-hibernate.properties
 com.welcome.server.iml
 WelcomePush-c160a6e929f1.json
 ModuleMain/src/main/resources/
 ModuleMain/src/main/webapp/
 ModuleMain/target/
+ModuleMain/src/main/main.iml

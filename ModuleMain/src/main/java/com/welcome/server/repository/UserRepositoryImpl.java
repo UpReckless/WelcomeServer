@@ -32,17 +32,17 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
-    public boolean checkCredentials(String imei, long id) {
+    public boolean checkCredentials(String imei) {
         CriteriaBuilder cb=entityManager.getCriteriaBuilder();
         CriteriaQuery<User> cq=cb.createQuery(User.class);
         Root<User> from=cq.from(User.class);
         ParameterExpression<String> p1=cb.parameter(String.class);
         ParameterExpression<Long> p2=cb.parameter(Long.class);
-        Predicate predicate=cb.and(cb.equal(from.get("imei"),p1),cb.equal(from.get("id"),p2));
+       // Predicate predicate=cb.and(cb.equal(from.get("imei"),p1),cb.equal(from.get("id"),p2));
+        Predicate predicate=cb.equal(from.get("imei"),p1);
         cq.select(from).where(predicate);
         TypedQuery<User> query=entityManager.createQuery(cq);
         query.setParameter(p1,imei);
-        query.setParameter(p2,id);
         query.setMaxResults(1);
         return !query.getResultList().isEmpty();
     }

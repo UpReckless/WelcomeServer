@@ -32,8 +32,8 @@ public class User {
     @Column(name = "imei",nullable = false)
     private String imei;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "raiting_id",referencedColumnName = "id",updatable = false)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "raiting_id",referencedColumnName = "id",unique = true,nullable = false)
     private Raiting raiting;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "id")
