@@ -1,21 +1,24 @@
 package com.welcome.server.entity;
 
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by royal on 10/3/16.
+ * Created by @mistreckless on 10/3/16.!
  */
 @Entity
 @Table(name = "user")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "nickname",length = 20, nullable = false)
+    @Column(name = "nickname",length = 20, nullable = false, unique = true)
     private String nickname;
 
     @Column(name = "email")
@@ -25,18 +28,29 @@ public class User {
     private String photoRef;
 
     @Column(name = "imei",nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String imei;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "raiting_id",referencedColumnName = "id")
-    private Raiting raiting;
+    @Column(name = "token",length = 1000)
+    private String token;
+
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "rating_id",referencedColumnName = "id",unique = true,nullable = false)
+    private Rating rating;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "id")
-    private List<ArchivePhoto> archivePhotos;
+    @JsonBackReference
+    private List<Post> posts;
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "place_id",referencedColumnName = "id")
+    private City city;
 
     public User(){}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -68,6 +82,7 @@ public class User {
         this.photoRef = photoRef;
     }
 
+    @JsonIgnore
     public String getImei() {
         return imei;
     }
@@ -76,19 +91,35 @@ public class User {
         this.imei = imei;
     }
 
-    public Raiting getRaiting() {
-        return raiting;
+    public Rating getRating() {
+        return rating;
     }
 
-    public void setRaiting(Raiting raiting) {
-        this.raiting = raiting;
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
-    public List<ArchivePhoto> getArchivePhotos() {
-        return archivePhotos;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setArchivePhotos(List<ArchivePhoto> archivePhotos) {
-        this.archivePhotos = archivePhotos;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

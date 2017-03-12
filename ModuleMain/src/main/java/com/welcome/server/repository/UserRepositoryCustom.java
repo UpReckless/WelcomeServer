@@ -7,6 +7,6 @@ import com.welcome.server.entity.User;
  */
 public interface UserRepositoryCustom {
 
-    boolean checkUserName(String name);
-    boolean checkCredentials(String imei, long id);
+    boolean checkUserNameExists(String name);
+    boolean checkCredentials(String imei);
 }

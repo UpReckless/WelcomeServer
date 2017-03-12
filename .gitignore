@@ -1,7 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
 .idea
-ModuleMain.iml
 db.properties
 hibernate.properties
 com.welcome.server.iml
@@ -9,3 +8,19 @@ WelcomePush-c160a6e929f1.json
 ModuleMain/src/main/resources/
 ModuleMain/src/main/webapp/
 ModuleMain/target/
+antlr
+aopalliance
+classworlds
+com
+commons-cli
+commons-codec
+commons-logging
+dom4j
+javax
+junit
+mysql
+net
+org
+xpp3
+ModuleMain/io/
+ModuleMain/src/test/
