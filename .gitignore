@@ -24,3 +24,5 @@ org
 xpp3
 ModuleMain/io/
 ModuleMain/src/test/
+ModuleMain/ch/
+ModuleMain/commons-fileupload/
