@@ -16,9 +16,13 @@ public interface UserService {
 
     UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest) throws NoSuchAlgorithmException;
 
-    List<User> getAll();
+    List<UserResponse> getUsers(int index);
 
     boolean checkName(String name);
 
     User getUserById(long id);
+
+    UserResponse getUserResponseById(long id);
+
+    List<UserResponse> getUsers(String name);
 }
